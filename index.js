@@ -110,5 +110,5 @@ function restartGame() {
 function resetScore() {
     scoreX = 0;
     scoreY = 0;
-    score.textContent = `Score : X = ${scoreX} | Y = ${scoreY}`;
+    score.textContent = `Score : X = ${scoreX} | O = ${scoreY}`;
 }
