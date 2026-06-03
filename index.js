@@ -1,6 +1,10 @@
 const cells = document.querySelectorAll(".cell");
 const status = document.querySelector("#status");
 const restart = document.querySelector("#restart");
+const score = document.querySelector("#scoreValue");
+const reset = document.querySelector("#reset");
+
+
 
 const winningCases = [
     [0, 1, 2],
@@ -16,12 +20,16 @@ let CurrentPlayer;
 
 let option = ["", "", "", "", "", "", "", "", ""];
 let running = false;
+let scoreX = 0;
+let scoreY = 0;
 
 startGame();
 cells.forEach((a, b) => {
   a.addEventListener("click", CellClicked);
 });
 restart.addEventListener("click", restartGame);
+
+reset.addEventListener("click", resetScore);
 
 
 function startGame() {
@@ -30,6 +38,7 @@ function startGame() {
     
     running = true;
     status.textContent = `ITS ${CurrentPlayer}'s TURN`;
+    score.textContent = `Score : X = ${scoreX} | O = ${scoreY}`;
 }
 
 function CellClicked() { 
@@ -63,7 +72,15 @@ function checkWinner() {
         ) {
           running = false;
             status.textContent = `${option[arr[0]]} IS THE WINNER`;
+            if (option[arr[0]] == "X") {
+                scoreX++;
+            }
+            else {
+                scoreY++;
+            }
+            score.textContent = `Score : X = ${scoreX} | O = ${scoreY}`;
             return;
+
         }
     }
 
@@ -88,4 +105,10 @@ function restartGame() {
         cells[i].textContent = "";
     }
     startGame();
+}
+
+function resetScore() {
+    scoreX = 0;
+    scoreY = 0;
+    score.textContent = `Score : X = ${scoreX} | Y = ${scoreY}`;
 }
