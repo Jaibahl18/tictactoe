@@ -18,21 +18,23 @@ let option = ["", "", "", "", "", "", "", "", ""];
 let running = false;
 
 startGame();
-
+cells.forEach((a, b) => {
+  a.addEventListener("click", CellClicked);
+});
+restart.addEventListener("click", restartGame);
 
 
 function startGame() {
+    // option = ["", "", "", "", "", "", "", "", ""];
     CurrentPlayer = "X";
-    cells.forEach((a, b) => { a.addEventListener("click", CellClicked) });
-    restart.addEventListener("click", restartGame);
+    
     running = true;
     status.textContent = `ITS ${CurrentPlayer}'s TURN`;
 }
 
 function CellClicked() { 
+
     if (running) {
-   
-        
         const cell = event.target.getAttribute("cellIndex");
         if (cells[cell].textContent == "" && running) {
           updateCell(cell);
@@ -47,11 +49,12 @@ function updateCell(cell) {
     cells[cell].textContent = CurrentPlayer;
     CurrentPlayer = CurrentPlayer == "X" ? "O" : "X";
     status.textContent = `ITS ${CurrentPlayer}'s TURN`;
-    console.log(option)
+    
     checkWinner();
 }
 
 function checkWinner() {
+    console.log(option);
     for (let arr of winningCases) {
         if (
           option[arr[0]] != "" &&
@@ -70,15 +73,17 @@ function checkWinner() {
             return;
         }
     }
-    status.textContent = `GAME OVERITS A TIE`;
+    status.textContent = `GAME OVER ITS A TIE`;
+    running = false;
+
+
     
 }
 
 
 function restartGame() {
-    running = true;
 
-    let option = ["", "", "", "", "", "", "", "", ""];
+    option = ["", "", "", "", "", "", "", "", ""];
     for (let i = 0; i < 9; i++){
         cells[i].textContent = "";
     }
